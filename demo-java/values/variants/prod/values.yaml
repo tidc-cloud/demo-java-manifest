@@ -1,0 +1,21 @@
+## - values-non-prod.yaml
+db:
+  service:
+    name: db-prd
+
+redis:
+  service:
+    name: redis-prd
+
+vote:
+  env:
+    REDIS_HOST: redis-prd
+
+worker:
+  env:
+    DB_HOST: db-prd
+    REDIS_HOST: redis-prd
+
+result:
+  env:
+    DB_HOST: db-prd

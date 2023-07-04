@@ -1,0 +1,3 @@
+apiVersion: v2
+name: deployment-template
+version: 0.1.0

@@ -1,0 +1,58 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vote-dev
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd-image-updater.argoproj.io/write-back-method: argocd
+
+    argocd-image-updater.argoproj.io/image-list: |
+      vote=tcr.tks.trueidc.com/sandbox-private/vote,
+      result=tcr.tks.trueidc.com/sandbox-private/result,
+      worker=tcr.tks.trueidc.com/sandbox-private/worker
+
+    argocd-image-updater.argoproj.io/vote.helm.image-name: vote.image.name
+    argocd-image-updater.argoproj.io/vote.helm.image-tag: vote.image.tag
+    argocd-image-updater.argoproj.io/vote.update-strategy: latest
+    argocd-image-updater.argoproj.io/vote.allow-tags: regexp:^dev-.+$
+
+    argocd-image-updater.argoproj.io/result.helm.image-name: result.image.name
+    argocd-image-updater.argoproj.io/result.helm.image-tag: result.image.tag
+    argocd-image-updater.argoproj.io/result.update-strategy: latest
+    argocd-image-updater.argoproj.io/result.allow-tags: regexp:^dev-.+$
+
+    argocd-image-updater.argoproj.io/worker.helm.image-name: worker.image.name
+    argocd-image-updater.argoproj.io/worker.helm.image-tag: worker.image.tag
+    argocd-image-updater.argoproj.io/worker.update-strategy: latest
+    argocd-image-updater.argoproj.io/worker.allow-tags: regexp:^dev-.+$
+
+spec:
+  project: prototype
+  destination:
+    name: slum
+    namespace: vote-dev
+  source:
+    repoURL: https://github.com/tidc-cloud/tcd-example-gitops-vote-app.git
+    targetRevision: HEAD
+    path: .
+    helm:
+      valueFiles:
+      # Common settings
+      - values/common/values-images.yaml
+      - values/common/values-settings.yaml
+
+      # Variants settings
+      - values/variants/non-prod/values.yaml
+
+      # Environment settings
+      - values/envs/dev/values-static-settings.yaml
+      - values/envs/dev/values-k8s-settings.yaml
+      - values/envs/dev/values-app-settings.yaml
+      - values/envs/dev/values-app-versions.yaml
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+    - CreateNamespace=true
+    - PruneLast=true

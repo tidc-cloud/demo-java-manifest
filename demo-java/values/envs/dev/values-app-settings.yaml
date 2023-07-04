@@ -1,0 +1,7 @@
+## Application settings
+#
+#  This settings can be promoted to other environments
+
+global:
+  env:
+    SECRET: w,j,u.8ii^h

@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vote-prod-th
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: prototype
+  destination:
+    name: slum
+    namespace: vote-prod-th
+  source:
+    repoURL: https://github.com/tidc-cloud/tcd-example-gitops-vote-app.git
+    targetRevision: v1.0.0
+    path: .
+    helm:
+      valueFiles:
+      # Commons settings
+      - values/common/values-images.yaml
+      - values/common/values-settings.yaml
+
+      # Variants settings
+      - values/variants/prod/values.yaml
+
+      # Environment settings
+      - values/envs/prod-th/values-static-settings.yaml
+      - values/envs/prod-th/values-k8s-settings.yaml
+      - values/envs/prod-th/values-app-settings.yaml
+      - values/envs/prod-th/values-app-versions.yaml
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+    - CreateNamespace=true
+    - PruneLast=true

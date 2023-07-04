@@ -1,0 +1,93 @@
+appname: java-demo
+
+global:
+  env:
+
+image:
+  name: java-demo
+  tag: 0.1.0
+  pullPolicy: IfNotPresent
+  pullSecret: ""
+
+# Number of replicas
+replicas: 1
+
+# List of container ports
+ports:
+  - 80
+
+## Service
+service:
+  enabled: true
+  type: ClusterIP
+  ports:
+    - name: java-demo
+      port: 8080
+      targetPort: 8080
+
+## Configure resource requests and limits
+## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+##
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# Environment Variables
+# env:
+#   REDIS_HOST: redis
+
+## Volumes
+volumes: []
+# - name: tmp
+#   mountPath: /tmp
+#   persistence:
+#     enable: false
+
+
+## Ingress configuration.
+# ref: https://kubernetes.io/docs/user-guide/ingress/
+ingress:
+  # -- Enable an ingress resource
+  enabled: false
+  # -- Additional ingress annotations
+  annotations: {}
+    # xx: yy
+
+  # -- Additional ingress labels
+  labels: {}
+    # xx: yy
+    # zz: zz
+
+  # -- Defines which ingress controller will implement the resource
+  ingressClassName: ""
+
+  # -- host must be provided if ingress enabled
+  host: ""
+
+  tls: []
+  # - secretName: vote.example.com-tls
+  #   hosts:
+  #   - vote.example.com
+
+  # -- Ingress path
+  path: /
+
+  # -- Service port. One of port defined in service
+  servicePort: 8080
+
+  # -- Ingress path type. One of `Exact`, `Prefix` or `ImplementationSpecific`
+  pathType: Prefix
+
+  # -- Additional ingress paths
+  extraPaths: []
+  # - path: /*
+  #   pathType: Prefix
+  #   backend:
+  #     service:
+  #       name: ssl-redirect
+  #       port:
+  #         name: use-annotation

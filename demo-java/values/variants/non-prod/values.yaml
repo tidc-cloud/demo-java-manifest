@@ -1,0 +1,25 @@
+## - values-non-prod.yaml
+global:
+  env:
+    REGION: Nonprod
+
+db:
+  service:
+    name: db-nonprod
+
+redis:
+  service:
+    name: redis-nonprod
+
+vote:
+  env:
+    REDIS_HOST: redis-nonprod
+
+worker:
+  env:
+    DB_HOST: db-nonprod
+    REDIS_HOST: redis-nonprod
+
+result:
+  env:
+    DB_HOST: db-nonprod

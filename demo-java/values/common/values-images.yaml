@@ -1,0 +1,7 @@
+## - values-images share for all environments
+
+vote:
+  image:
+    name: tcr.tks.trueidc.com/sandbox-private/java-demo
+    pullSecret: sandbox-regcred
+    pullPolicy: Always

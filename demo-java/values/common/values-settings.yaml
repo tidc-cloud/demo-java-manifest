@@ -1,0 +1,5 @@
+## - Common setting applied to all environments
+#    Values can be overriden by environment specific
+global:
+  env:
+    REGION: global
