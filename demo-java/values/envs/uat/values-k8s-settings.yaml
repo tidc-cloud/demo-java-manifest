@@ -1,0 +1,24 @@
+## Kubernetes specific settings
+#
+#  DO NOT PROMOTE
+#
+#  This is Environment Specific.
+#  - Replicas
+#  - Resource Limit
+#  - Health Check
+#  - Affinity
+#  - Persistent Volume
+
+replicas: 1
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
+ingress:
+  enabled: true
+  host: demo-java-dev.papermint.io
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
