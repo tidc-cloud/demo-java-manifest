@@ -1,1 +1,4 @@
 ## - values-non-prod.yaml
+
+ingress:
+  ingressClassName: kong
