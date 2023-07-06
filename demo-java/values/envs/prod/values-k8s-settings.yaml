@@ -12,11 +12,11 @@
 replicas: 1
 resources:
   limits:
-    cpu: 100m
-    memory: 128Mi
+    cpu: 2
+    memory: 1280Mi
   requests:
-    cpu: 50m
-    memory: 64Mi
+    cpu: 1
+    memory: 640Mi
 ingress:
   enabled: true
   host: demo-java.papermint.io
