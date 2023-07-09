@@ -19,7 +19,7 @@ ports:
 ## Service
 service:
   enabled: true
-  type: ClusterIP
+  type: NodePort
   ports:
     - name: java-demo
       port: 8080
